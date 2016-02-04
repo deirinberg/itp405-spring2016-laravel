@@ -9,7 +9,7 @@
   </head>
   <body>
     <h3>DVD Search</h3>
-    <form action="../" method="get">
+    <form action="/dvds" method="get">
       <p class="search-header">Title: </p>
       <input class="search-field" type="text" name="dvd_title">
       <br>

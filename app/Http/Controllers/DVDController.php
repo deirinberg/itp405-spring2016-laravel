@@ -13,10 +13,8 @@ class DVDController extends Controller
     public function search()
     {
         $genres = DB::table('genres')
-            ->select('*')
             ->get();
         $ratings = DB::table('ratings')
-            ->select('*')
             ->get();
 
         return view('search', [
@@ -30,6 +28,9 @@ class DVDController extends Controller
         $dvd_title = $request->input('dvd_title');
         $genre_id = $request->input('genre_id');
         $rating_id = $request->input('rating_id');
+
+        $genre_name = '';
+        $rating_name = '';
 
         $dvdsQuery = DB::table('dvds')
             ->select('title', 'rating_name', 'genre_name', 'label_name', 'sound_name', 'format_name')
@@ -46,24 +47,22 @@ class DVDController extends Controller
         if ($genre_id && strcmp($genre_id, 'all') !== 0) {
             $dvdsQuery = $dvdsQuery->where('dvds.genre_id', "$genre_id");
             $genre = DB::table('genres')
-                ->select('*')
                 ->where('id', "$genre_id")
                 ->get();
 
             if(!empty($genre)) {
-                $genre = array_values($genre)[0];
+                $genre_name = array_values($genre)[0]->genre_name;
             }
         }
 
         if ($rating_id && strcmp($rating_id, 'all') !== 0) {
             $dvdsQuery = $dvdsQuery->where('dvds.rating_id', "$rating_id");
             $rating = DB::table('ratings')
-                ->select('*')
                 ->where('id', "$rating_id")
                 ->get();
 
             if(!empty($rating)) {
-                $rating = array_values($rating)[0];
+                $rating_name = array_values($rating)[0]->rating_name;
             }
         }
 
@@ -72,8 +71,8 @@ class DVDController extends Controller
         return view('results', [
             'dvds' => $dvds,
             'dvd_title' => $dvd_title,
-            'genre' => $genre,
-            'rating' => $rating,
+            'genre_name' => $genre_name,
+            'rating_name' => $rating_name,
         ]);
 
         return view('results');
