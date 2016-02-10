@@ -15,9 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dvds/search', 'DVDController@search');
-Route::get('/dvds', 'DVDController@results');
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -30,5 +27,10 @@ Route::get('/dvds', 'DVDController@results');
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+	Route::get('/dvds/search', 'DVDController@search');
+	Route::get('/dvds', 'DVDController@results');
+
+	Route::get('/dvds/{id}', 'DVDController@dvd');
+	Route::post('/dvds/{id}/review', 'DVDController@review');
 });
+

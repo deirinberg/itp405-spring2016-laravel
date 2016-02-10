@@ -1,0 +1,85 @@
+.back-button {
+	margin-top: 1.2em;
+	float: left;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.dvd-info-container {
+  margin-top: 1.8em;
+  text-align: center;
+}
+
+.dvd-info-container ul {
+  text-align: left;
+  display: inline-block;
+  list-style-type: none;
+  font-size: 14px;
+}
+
+.dvd-info {
+   padding-left: 0.6em;
+}
+
+.info-header {
+	display: inline-block;
+	max-width: 100px;
+}
+
+.info-item {
+	display: inline-block;
+}
+
+#info-separator {
+	margin-top: 0.5em;
+}
+
+.add-review {
+  text-align: center;
+}
+
+.add-review form {
+  margin-top: 1em;
+  text-align: left;
+  display: inline-block;
+}
+
+.review-header {
+  display: inline-block;
+  width: 90px;
+}
+
+.review-field {
+  display: inline-block;
+  width: 180px;
+}
+
+.submit {
+  text-align: center;
+}
+
+.submit input {
+  width: 150px;
+}
+
+.reviews {
+  text-align: center;
+}
+
+td {
+  text-align: left;
+}
+
+.errors {
+  padding: 0;
+}
+
+.errors li {
+  color: red;
+}
+
+.success {
+  color: green;
+}

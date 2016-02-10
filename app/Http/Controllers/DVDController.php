@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+use Validator;
+use App\Models\Review;
 
 class DVDController extends Controller
 {
@@ -33,7 +35,7 @@ class DVDController extends Controller
         $rating_name = '';
 
         $dvdsQuery = DB::table('dvds')
-            ->select('title', 'rating_name', 'genre_name', 'label_name', 'sound_name', 'format_name')
+            ->select('dvds.id', 'title', 'rating_name', 'genre_name', 'label_name', 'sound_name', 'format_name')
             ->leftJoin('ratings', 'dvds.rating_id', '=', 'ratings.id')
             ->leftJoin('genres', 'dvds.genre_id', '=', 'genres.id')
             ->leftJoin('labels', 'dvds.label_id', '=', 'labels.id')
@@ -76,5 +78,61 @@ class DVDController extends Controller
         ]);
 
         return view('results');
+    }
+
+    public function dvd(Request $request, $id)
+    {
+        $dvdsQuery = DB::table('dvds')
+            ->select('dvds.id', 'title', 'rating_name', 'genre_name', 'label_name', 'sound_name', 'format_name')
+            ->leftJoin('ratings', 'dvds.rating_id', '=', 'ratings.id')
+            ->leftJoin('genres', 'dvds.genre_id', '=', 'genres.id')
+            ->leftJoin('labels', 'dvds.label_id', '=', 'labels.id')
+            ->leftJoin('sounds', 'dvds.sound_id', '=', 'sounds.id')
+            ->leftJoin('formats', 'dvds.format_id', '=', 'formats.id')
+            ->where('dvds.id', "$id");
+
+        $dvd = $dvdsQuery->get();
+
+        if (!empty($dvd)) {
+            $dvd = array_values($dvd)[0]; 
+        }
+
+        $reviewsQuery = DB::table('reviews')
+            ->select('title', 'description', 'rating')
+            ->where('dvd_id', "$id");
+        $reviews = $reviewsQuery->get();
+
+        return view('dvd', [
+            'dvd' => $dvd,
+            'reviews' => $reviews,
+        ]);
+
+        return view('dvd');
+    }
+
+    public function review(Request $request, $id)
+    {
+        $validation = Validator::make($request->all(), [
+            'rating' => 'required|between:1,10',
+            'title' => 'required|min:5',
+            'description' => 'required|min:5'
+        ]);
+
+        if ($validation->fails()) {
+            return redirect('dvds/' . $id)
+                ->withInput()
+                ->withErrors($validation);
+        }
+
+        $review = new Review([
+            'rating' => $request->input('rating'),
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'dvd_id' => $id
+        ]);
+
+        $review->save();
+
+        return redirect('dvds/' . $id)->with('success', true);
     }
 }
