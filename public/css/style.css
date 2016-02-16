@@ -18,6 +18,12 @@ body {
 	padding-right: 1.2em;
 }
 
+ul {
+  list-style-type: none;
+   padding-left: 0.2em;
+}
+
+
 a:link, a:visited {
 	color: #62B0DD;
 }
@@ -44,4 +50,16 @@ a:hover {
 .search-field {
 	display: inline-block;
 	min-width: 154px;
+}
+
+.errors {
+  padding: 0;
+}
+
+.errors li {
+  color: red;
+}
+
+.success {
+  color: green;
 }

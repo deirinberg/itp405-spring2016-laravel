@@ -3,10 +3,6 @@
 	float: left;
 }
 
-ul {
-  list-style-type: none;
-}
-
 .dvd-info-container {
   margin-top: 1.8em;
   text-align: center;
@@ -70,16 +66,4 @@ ul {
 
 td {
   text-align: left;
-}
-
-.errors {
-  padding: 0;
-}
-
-.errors li {
-  color: red;
-}
-
-.success {
-  color: green;
 }
