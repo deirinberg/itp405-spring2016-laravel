@@ -6,19 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class DVD extends Model
 {
+    protected $hidden = [ 'created_at', 'release_date', 'updated_at'];
+
     public function rating()
     {
-        return $this->hasOne('App\Models\Rating', 'id', 'rating_id');
+        return $this->belongsTo('App\Models\Rating');
     }
 
     public function genre()
     {
-        return $this->hasOne('App\Models\Genre', 'id', 'genre_id');
+        return $this->belongsTo('App\Models\Genre');
     }
 
     public function label()
     {
-        return $this->hasOne('App\Models\Label', 'id', 'label_id');
+        return $this->belongsTo('App\Models\Label');
     }
 
     protected $table = 'dvds';

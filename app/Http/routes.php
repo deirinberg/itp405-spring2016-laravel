@@ -26,6 +26,15 @@ Route::get('/', function () {
 |
 */
 
+Route::group([ 'prefix' => 'api/v1', 'namespace' => 'API' ], function() {
+    Route::get('genres', 'GenreController@index');
+    Route::get('genres/{id}', 'GenreController@show');
+    Route::get('dvds', 'DVDController@index');
+    Route::get('dvds/{id}', 'DVDController@show');
+    Route::post('dvds', 'DVDController@store');
+});
+
+
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/dvds/search', 'DVDController@search');
 	Route::get('/dvds', 'DVDController@results');
