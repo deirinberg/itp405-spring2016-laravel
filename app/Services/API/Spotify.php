@@ -51,7 +51,7 @@ class Spotify {
             $jsonString = Cache::get($endpoint);
         } else {
             $jsonString = file_get_contents($endpoint);
-            Cache::put($endpoint, $jsonString, 60);
+            Cache::put($endpoint, $jsonString, 30);
         }
 
         return json_decode($jsonString);
