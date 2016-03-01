@@ -1,30 +1,11 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+use App\Services\API\Spotify;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
 
 Route::group([ 'prefix' => 'api/v1', 'namespace' => 'API' ], function() {
     Route::get('genres', 'GenreController@index');
@@ -46,5 +27,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/dvds/{id}/review', 'DVDController@review');
 
 	Route::get('/genres/{genre_id}/dvds', 'DVDController@genreDVDs');
+
+	Route::get('/spotify', 'SpotifyController@search');
+	Route::get('/spotify/artists', 'SpotifyController@results');
+    Route::get('/spotify/artists/{artist_id}', 'SpotifyController@artist');
 });
 
